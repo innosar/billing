@@ -1,0 +1,262 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
+	
+	
+<h:head>
+<style type="text/css">
+.small{
+ line-height: 14px;
+ text-align: center;
+ text-justify: inter-word;
+}
+</style>
+
+</h:head>
+
+<h:form id="y" >
+	<p:growl id="growl" showDetail="true" />
+	
+
+
+
+ 
+    
+     </h:form>
+  
+  
+    <h:form id="table">
+     <b:panelGrid columns="2">
+      
+       <p:outputLabel  value="Invoices: " />
+         <b:selectOneMenu id="tname"  value="#{orderpBeanDao.inv}" required="true">     				
+     				<f:ajax listener="#{orderpBeanDao.action}" process="@this" />  
+     				<f:ajax listener="#{orderpBeanController.init}" process="@this" />
+     				 
+     				   
+     				 <p:ajax update="tablex" process="@this"/>
+	
+                    <f:selectItem itemLabel="(Please select)" itemValue="" />     
+                    <f:selectItems value="#{orderpBeanDao.invs}" />
+                    
+                   </b:selectOneMenu>
+                   
+   <h:outputText value="Start Date" />
+    <p:calendar id="inline" value="#{orderpBeanDao.cdate1}"  >
+    
+                  </p:calendar>
+                 
+   
+  
+  <h:outputText value="End Date" />
+  
+   <p:calendar id="inline1" value="#{orderpBeanDao.cdate2}">
+  
+                  </p:calendar>
+                  
+    
+   <b:column>
+        <p:commandButton value="Submit" update="parentPanel" action="#{orderpBeanController.init}" icon="pi pi-check" />
+    </b:column>
+   
+  
+  
+    
+   
+   </b:panelGrid>
+   
+
+   <br/>
+    
+    <p:panel id="tablex">
+    <p:growl id="growl" showDetail="true" />
+    <p:remoteCommand name="onCellEdit" update="parentPanel" />
+    <p:dataTable value="#{orderpBeanController.lazyModel}" id="parentPanel"
+			var="item1" paginator="true" rows="20" lazy="true" rowIndexVar="rowIndex"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="(Entries: {startRecord} - {endRecord} of {totalRecords}, Page: {currentPage}/{totalPages})"
+			rowsPerPageTemplate="20,50,100,200,500,1000,10000,100000"
+			emptyMessage="No Result found with given criteria"
+			rowKey="#{item1.tname}" >
+			
+			<p:ajax event="filter" oncomplete="onCellEdit()" />
+       
+       
+			
+			
+			<p:column sortBy="#{item1.tname}" filterBy="#{item1.tname}">
+			<f:facet name="header">  
+            <h:outputText value="Table Name" />  
+        </f:facet> 
+				<h:outputText value="#{item1.tname}" />
+			</p:column>
+			
+			
+			
+			<p:column sortBy="#{item1.item}" filterBy="#{item1.item}">
+			<f:facet name="header">  
+            <h:outputText value="Item Name" />  
+        </f:facet> 
+				<h:outputText value="#{item1.item}" />
+			</p:column>
+			
+		
+			
+			<p:column>
+			<f:facet name="header">  
+            <h:outputText value="Qty" />  
+        </f:facet> 
+				<h:outputText value="#{item1.qty}" />
+			</p:column>
+			
+				<p:column>
+			<f:facet name="header">  
+            <h:outputText value="Rate" />  
+        </f:facet> 
+				<h:outputText value="#{item1.rate}" />
+			</p:column>
+			
+				<p:column>
+			<f:facet name="header">  
+            <h:outputText value="Amt" />  
+        </f:facet> 
+				<h:outputText value="#{item1.amt}" />
+			</p:column>
+			
+				<p:column>
+			<f:facet name="header">  
+            <h:outputText value="Status" />  
+        </f:facet> 
+				<h:outputText value="#{item1.sta}" />
+			</p:column>
+			
+			
+				<p:column sortBy="#{item1.created}" filterBy="#{item1.created}">
+			<f:facet name="header">  
+            <h:outputText value="Created Date" />  
+        </f:facet> 
+				<h:outputText value="#{item1.created}" />
+			</p:column>
+			
+			
+			<p:column rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">
+			 <p:commandButton value="Delete" ajax="true"  look="danger"  action="#{orderpBeanController.deleteListener(item1.invoice)}" update="table:parentPanel,table:growl">
+						
+						 </p:commandButton>
+				</p:column>		 
+		<p:columnGroup type="footer">
+            <p:row>
+             <p:column colspan="2" style="text-align:right" footerText="Total Bill " />
+               
+         		<p:column style="text-align:left" footerText="#{orderpbean.qtysum}" />
+         		<p:column style="text-align:left" footerText="#{orderpbean.ratesum}" />  
+         		<p:column style="text-align:left" footerText="#{orderpbean.amtsum}" />
+         		
+         		<p:column colspan="2" style="text-align:right" footerText=" " />
+         		<p:column colspan="1" style="text-align:right" footerText=" " rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}"/>
+         		
+         	</p:row>
+         	</p:columnGroup>
+						 
+			</p:dataTable>
+    
+   
+    
+    </p:panel>
+    
+     <b:commandButton value="View Duplicate Bill" ajax="true"  look="success"  action="#{orderpBeanDao.exportListener}"  oncomplete="PF('dlg1').show();" >
+    <f:ajax listener="#{orderpBeanDao.exportListener}" process="@this" /> 
+     <p:ajax update="tabley,dlg" process="@this"/>
+    </b:commandButton>
+    
+    
+     <p:dialog header="Duplicate Bill"  widgetVar="dlg1" closeOnEscape="true" width="700" height="600" dynamic="true" responsive="true">
+    <p:panel id="dlg">
+    <div>
+
+   
+   
+  
+    
+   <h:outputText value="#{orderpBeanDao.address1}" style="font-weight:bold;font-size:18;display:inline-block;width:100%;text-align:center" /><br/>
+    <h:outputText value="#{orderpBeanDao.address2}" style="font-weight:bold;font-size:8;display:inline-block;width:100%;text-align:center" /><br/>
+     <h:outputText value="#{orderpBeanDao.address3}" style="font-weight:bold;font-size:8;display:inline-block;width:100%;text-align:center" /><br/>
+      <h:outputText value="#{orderpBeanDao.address4}" style="font-weight:bold;font-size:8;display:inline-block;width:100%;text-align:center" /><br/>
+       <h:outputText value="#{orderpBeanDao.address5}" style="font-weight:bold;font-size:8;display:inline-block;width:100%;text-align:center" /><br/>
+       <h:outputText value="Ph :#{orderpBeanDao.mob}" style="font-weight:bold;font-size:8;display:inline-block;width:100%;text-align:center" /><br/>
+       <h:outputText value="GST : #{orderpBeanDao.gst}" style="font-weight:bold;font-size:10;display:inline-block;width:100%;text-align:center" /><br/>
+           
+      
+  
+ <br/>
+<h:outputText value="Table Name: #{orderpBeanDao.tab} " style="font-weight:bold;font-size:10;float:left" />
+<h:outputText value="BIll No: #{orderpBeanDao.inv} " style="font-weight:bold;font-size:10;float:right" /><br/>
+<h:outputText value="Date Time:#{orderpBeanDao.formattedDate} " style="font-weight:bold;font-size:10;float:left" /><br/>
+
+<p:dataTable id="tabley" var="car" value="#{orderpBeanController.lazyModel}">
+    <p:column headerText="Item" style="font-weight:bold;font-size:10;width:110px;text-align:left">
+        <h:outputText value="#{car.item}" style="font-weight:bold;font-size:10;"/>
+    </p:column>
+ 
+    <p:column headerText="Qty" style="font-weight:bold;font-size:10;text-align:left">
+        <h:outputText value="#{car.qty}" style="font-weight:bold;font-size:10;" />
+    </p:column>
+ 
+    <p:column headerText="Price" style="font-weight:bold;font-size:10;text-align:left">
+        <h:outputText value="#{car.rate}" style="font-weight:bold;font-size:10;"/>
+    </p:column>
+ 
+    <p:column headerText="Amt" style="font-weight:bold;font-size:10;text-align:left">
+        <h:outputText value="#{car.amt}" style="font-weight:bold;font-size:10;"/>
+    </p:column>
+ 
+   				 <p:columnGroup type="footer">
+            <p:row>
+            
+               
+         		<p:column style="font-weight:bold;font-size:9;text-align:left" footerText="Tax Value(5.00 %)" />
+         		<p:column style="font-weight:bold;font-size:9;text-align:left" footerText="CGST (2.5%)" />  
+         		<p:column style="font-weight:bold;font-size:9;text-align:left" footerText="SGST (2.5%)" />  
+         		<p:column style="font-weight:bold;font-size:9;text-align:left" footerText="Discount" />  
+   </p:row>
+   <p:row>
+            
+               
+         		<p:column style="font-weight:bold;font-size:9;" footerText="#{orderpBeanDao.taxval}" />
+         		<p:column style="font-weight:bold;font-size:9;" footerText="#{orderpBeanDao.cgst}" />  
+         		<p:column style="font-weight:bold;font-size:9;" footerText="#{orderpBeanDao.sgst}" />  
+         		<p:column style="font-weight:bold;font-size:9;" footerText="#{orderpBeanDao.discp} %" />  
+   </p:row>
+   </p:columnGroup>
+</p:dataTable>
+   
+      <h:outputText value="Total    : #{orderpBeanDao.totalamt}" style="font-weight:bold;font-size:16;float:right" /><br/><br/>
+     <h:outputText value="Thank You ......Visit Again" style="font-weight:bold;font-size:10;display:inline-block;width:100%;text-align:center" /><br/>
+     
+     <h:outputText value="Website: #{orderpBeanDao.web}" style="font-weight:bold;font-size:10;display:inline-block;width:100%;text-align:center" /><br/>
+     
+     
+    </div>
+</p:panel>
+
+    
+    
+   <p:commandButton value="Print" type="button" icon="pi pi-print" style="display:block;margin-bottom: 20px">
+   
+    <p:printer target="dlg" />
+</p:commandButton>
+
+ 
+</p:dialog>
+    
+   </h:form>
+
+
+    
+   
+   
+</html>
+

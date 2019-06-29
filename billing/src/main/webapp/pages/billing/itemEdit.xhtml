@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+<!-- those two empty p : outputLabel are totally unbelievable but there seems to be needed 
+     when the artifact is used from a ui:include otherwise there is gap of one column and the
+	 label, field, validation are not aligned...&nbsp;
+-->
+
+
+    
+<p:panelGrid columns="3" id="panel1" cellpadding="5">
+<p:outputLabel>Item *</p:outputLabel>
+<p:inputText size="100" maxlength="100" label="Item"
+	id="item"
+	value="#{itemBeanController.selectedItemBean.item}" required="true" />
+<p:message for="item" />
+
+<p:outputLabel>Rate *</p:outputLabel>
+<p:inputText size="10" maxlength="10" label="Rate"
+	id="rate"
+	value="#{itemBeanController.selectedItemBean.rate}" required="true" />
+<p:message for="rate" />
+
+
+
+     
+     </p:panelGrid>
+<!-- those two empty p : outputLabel are totally inbelievable but there seems to be needed 
+     when the artifact is used from a ui:include otherwise there is gap of one column and the
+	 label, field, validation are not aligned...&nbsp;
+-->
+
+</html>
+

@@ -1,0 +1,144 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
+	
+	
+
+
+<h:form id="y">
+	<p:growl id="growl" showDetail="true" />
+	
+
+
+
+ 
+    
+
+
+ 
+ 
+     
+</h:form>
+    <h:form id="table">
+     <p:growl id="growl" showDetail="true" />
+     <p:remoteCommand name="onCellEdit" update="parentPanel" />
+     <p:dataTable value="#{tableBillController.lazyModel}" id="parentPanel"
+			var="item" paginator="true" rows="20" lazy="true" rowIndexVar="rowIndex"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="(Entries: {startRecord} - {endRecord} of {totalRecords}, Page: {currentPage}/{totalPages})"
+			rowsPerPageTemplate="20,50,100,200,500,1000,10000,100000"
+			emptyMessage="No Result found with given criteria"
+			rowKey="#{item.sno}" >
+			
+			<p:ajax event="filter" oncomplete="onCellEdit()" />
+       
+       
+			<p:column >
+			<f:facet name="header">  
+            <h:outputText value="Invoice" />  
+        </f:facet> 
+				<h:outputText value="#{item.fno}" />
+			</p:column>
+			
+			<p:column sortBy="#{item.tname}" filterBy="#{item.tname}" >
+			<f:facet name="header">  
+            <h:outputText value="Table Name" />  
+        </f:facet> 
+				<h:outputText value="#{item.tname}" />
+			</p:column>
+			
+			
+			
+			<p:column sortBy="#{item.taxval}" filterBy="#{item.taxval}" >
+			<f:facet name="header">  
+            <h:outputText value="Tax Value" />  
+        </f:facet> 
+				<h:outputText value="#{item.taxval}" />
+			</p:column>
+			
+		
+			
+			<p:column sortBy="#{item.cgst}" filterBy="#{item.cgst}" >
+			<f:facet name="header">  
+            <h:outputText value="CGST" />  
+        </f:facet> 
+				<h:outputText value="#{item.cgst}" />
+			</p:column>
+			
+				<p:column sortBy="#{item.sgst}" filterBy="#{item.sgst}" >
+			<f:facet name="header">  
+            <h:outputText value="SGST" />  
+        </f:facet> 
+				<h:outputText value="#{item.sgst}" />
+			</p:column>
+			
+			<p:column sortBy="#{item.discp}" filterBy="#{item.discp}" >
+			<f:facet name="header">  
+            <h:outputText value="Disc %" />  
+        </f:facet> 
+				<h:outputText value="#{item.discp}" />
+			</p:column>
+			
+			
+			<p:column sortBy="#{item.disca}" filterBy="#{item.disca}" >
+			<f:facet name="header">  
+            <h:outputText value="Disc Amt" />  
+        </f:facet> 
+				<h:outputText value="#{item.disca}" />
+			</p:column>
+			
+				<p:column sortBy="#{item.modep}" filterBy="#{item.modep}" >
+			<f:facet name="header">  
+            <h:outputText value="Mode" />  
+        </f:facet> 
+				<h:outputText value="#{item.modep}" />
+			</p:column>
+			
+				<p:column sortBy="#{item.totalamt}" filterBy="#{item.totalamt}" >
+			<f:facet name="header">  
+            <h:outputText value="Total Amount" />  
+        </f:facet> 
+				<h:outputText value="#{item.totalamt}" />
+			</p:column>
+			
+			<p:column sortBy="#{item.created}" filterBy="#{item.created}" >
+			<f:facet name="header">  
+            <h:outputText value="Created Date" />  
+        </f:facet> 
+				<h:outputText value="#{item.created}" />
+			</p:column>
+				
+			
+			
+			<p:column rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">
+			 <p:commandButton value="Delete" ajax="true"  look="danger"  action="#{tableBillController.deleteListener(item.fno)}" update="table:parentPanel,table:growl">
+						
+						 </p:commandButton>
+				</p:column>		 
+				 <p:columnGroup type="footer">
+            <p:row>
+             <p:column colspan="2" style="text-align:right" footerText="Total Bill " />
+               
+         		<p:column style="text-align:left" footerText="#{tablebill.taxvalsum}" />
+         		<p:column style="text-align:left" footerText="#{tablebill.cgstsum}" />  
+         		<p:column style="text-align:left" footerText="#{tablebill.sgstsum}" />
+         		<p:column style="text-align:left" footerText="" />
+         		<p:column style="text-align:left" footerText="#{tablebill.discasum}" />
+         		<p:column style="text-align:left" footerText="#{tablebill.totalamtsum}" />
+         		<p:column colspan="1" style="text-align:right" footerText=" " />
+         		<p:column colspan="1" style="text-align:right" footerText=" " rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}"/>
+         		
+         		
+         	</p:row>
+         	</p:columnGroup>
+         			 
+			</p:dataTable>
+    
+
+   </h:form>
+    
+</html>
+

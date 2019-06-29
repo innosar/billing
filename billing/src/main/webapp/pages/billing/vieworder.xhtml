@@ -1,0 +1,299 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
+	
+	
+<h:head>
+<style type="text/css">
+.small{
+ line-height: 14px;
+ text-align: center;
+ text-justify: inter-word;
+}
+</style>
+
+</h:head>
+
+<h:form id="y" >
+	<p:growl id="growl" showDetail="true" />
+	
+
+  
+    
+ 
+   
+      <b:container fluid="true">
+       <b:row>
+       <b:panelGrid columns="3">
+  
+      
+   <p:outputLabel  value="Tables: " />
+      <p:outputLabel  value="Items: " />
+      <p:outputLabel  value=" " />
+       
+        
+     
+          <p:selectOneListbox  id="tname"  value="#{orderBeanDao.tname}" required="true" filter="true" filterMatchMode="contains" scrollHeight="120" style="width:320px">     				
+     				
+     				<f:ajax listener="#{orderBeanDao.init}" process="@this" />     
+     				 <p:ajax update="table:parentPanel" process="@this"/>
+	
+	
+                    
+                    <f:selectItems value="#{orderBeanDao.tnames}" />
+                  </p:selectOneListbox>
+                    
+        
+      
+                    <p:selectOneListbox id="item"  value="#{orderBeanDao.item}" required="true" filter="true" filterMatchMode="contains" scrollHeight="120" style="width:480px">     				
+     				<f:ajax listener="#{orderBeanDao.init}" process="@this" />
+                    <p:ajax update="rate" process="@this"/>
+                    <f:selectItems value="#{orderBeanDao.items}" />
+                   </p:selectOneListbox>
+                   
+               
+ <p:outputLabel  value="" />  
+
+ <p:outputLabel  value="Rate (optional): " />
+ <p:outputLabel  value="Qty: " />
+ <p:outputLabel  value="In Grams " />
+<b:inputText id="rate" size="3"   value="#{orderBeanDao.rate}">
+<f:validateLongRange minimum="1" maximum="500" />
+</b:inputText>		
+
+
+
+   
+         
+<b:inputText id="qty" size="3"   value="#{orderBeanDao.qty}" required="true">
+<f:validateLongRange minimum="1" maximum="500" required="true"/>
+</b:inputText>		
+
+
+ <p:selectBooleanCheckbox value="#{orderBeanDao.value2}" itemLabel="grams">
+            <p:ajax update="growl" listener="#{orderBeanDao.addMessage}" />
+        </p:selectBooleanCheckbox>
+
+   <p:message for="qty" />
+  <p:commandButton value="Place Order" icon="ui-icon-add"  ajax="true" look="success"  action="#{orderBeanDao.action}" update="y:growl,table:parentPanel"/>
+    
+    
+
+
+
+
+     
+   
+                    
+    
+ 
+ </b:panelGrid>
+  
+   
+ </b:row>
+    </b:container>
+    
+     </h:form>
+  
+  <br/>
+  
+    <h:form id="table">
+    
+     
+   <h:panelGrid columns="3">
+ 
+<p:outputLabel  value="Enter Discount in % " />
+ <p:inputText id="firstname" value="#{orderBeanDao.discp}">
+            <p:ajax event="keyup" update="out1" />
+        </p:inputText>
+        <h:outputText id="out1" value="#{orderBeanDao.discp} % Discount is applied" />
+        
+        
+                   
+        </h:panelGrid>
+        
+    <b:commandButton value="Bill Generate" ajax="true"  look="success"  action="#{orderBeanDao.exportListener}"  oncomplete="PF('dlg1').show();" >
+    <f:ajax listener="#{orderBeanDao.exportListener}" process="@this" /> 
+     <p:ajax update="tabley,dlg" process="@this"/>
+    </b:commandButton>
+    
+    
+    <p:growl id="growl" showDetail="true" />
+     <p:dataTable value="#{orderBeanController.lazyModel}" id="parentPanel"
+			var="item" paginator="true" rows="1000" lazy="true" rowIndexVar="rowIndex"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="(Entries: {startRecord} - {endRecord} of {totalRecords}, Page: {currentPage}/{totalPages})"
+			rowsPerPageTemplate="100,200,500,1000,10000,100000"
+			emptyMessage="No Result found with given criteria"
+			rowKey="#{item.sno}" >
+			
+			<p:column >
+			<f:facet name="header">  
+            <h:outputText value="SlNo" />  
+        </f:facet> 
+				<h:outputText value="#{item.sno}" />
+			</p:column>
+			
+			<p:column>
+			<f:facet name="header">  
+            <h:outputText value="Table Name" />  
+        </f:facet> 
+				<h:outputText value="#{item.tname}" />
+			</p:column>
+			
+			
+			
+			<p:column>
+			<f:facet name="header">  
+            <h:outputText value="Item Name" />  
+        </f:facet> 
+				<h:outputText value="#{item.item}" />
+			</p:column>
+			
+		
+			
+			<p:column>
+			<f:facet name="header">  
+            <h:outputText value="Qty" />  
+        </f:facet> 
+				<h:outputText value="#{item.qty}" />
+			</p:column>
+			
+				<p:column>
+			<f:facet name="header">  
+            <h:outputText value="Rate" />  
+        </f:facet> 
+				<h:outputText value="#{item.rate}" />
+			</p:column>
+			
+				<p:column>
+			<f:facet name="header">  
+            <h:outputText value="Amt" />  
+        </f:facet> 
+				<h:outputText value="#{item.amt}" />
+			</p:column>
+			
+				<p:column>
+			<f:facet name="header">  
+            <h:outputText value="Status" />  
+        </f:facet> 
+				<h:outputText value="#{item.sta}" />
+			</p:column>
+			
+			
+				<p:column>
+			<f:facet name="header">  
+            <h:outputText value="Created Date" />  
+        </f:facet> 
+				<h:outputText value="#{item.created}" />
+			</p:column>
+			
+			
+			<p:column>
+			 <p:commandButton value="Delete" ajax="true"  look="danger"  action="#{orderBeanController.deleteListener(item.sno)}" update="table:parentPanel,table:growl">
+						
+						 </p:commandButton>
+				</p:column>		 
+						 
+			</p:dataTable>
+    
+
+    
+    
+    
+     <p:dialog header="Billing"  modal="true" widgetVar="dlg1" closeOnEscape="true" width="700" height="500" dynamic="true" responsive="true">
+    <p:panel id="dlg">
+    <div>
+
+   
+   
+   <h:outputText value="#{orderBeanDao.address1}" style="font-weight:bold;font-size:18;display:inline-block;width:100%;text-align:center" /><br/>
+    <h:outputText value="#{orderBeanDao.address2}" style="font-weight:bold;font-size:8;display:inline-block;width:100%;text-align:center" /><br/>
+     <h:outputText value="#{orderBeanDao.address3}" style="font-weight:bold;font-size:8;display:inline-block;width:100%;text-align:center" /><br/>
+      <h:outputText value="#{orderBeanDao.address4}" style="font-weight:bold;font-size:8;display:inline-block;width:100%;text-align:center" /><br/>
+       <h:outputText value="#{orderBeanDao.address5}" style="font-weight:bold;font-size:8;display:inline-block;width:100%;text-align:center" /><br/>
+       <h:outputText value="Ph : #{orderBeanDao.mob}" style="font-weight:bold;font-size:8;display:inline-block;width:100%;text-align:center" /><br/>
+       <h:outputText value="GST : #{orderBeanDao.gst}" style="font-weight:bold;font-size:10;display:inline-block;width:100%;text-align:center" /><br/>
+      
+   <br/>
+<h:outputText value="Table Name: #{orderBeanDao.tname} " style="font-weight:bold;font-size:10;float:left" />
+<h:outputText value="BIll No: #{orderBeanDao.fnoinc} " style="font-weight:bold;font-size:10;float:right" /><br/>
+<h:outputText value="Date Time:#{orderBeanDao.formattedDate} " style="font-weight:bold;font-size:10;float:left" /><br/>
+  
+ 
+
+ <p:dataTable id="tabley" var="car" value="#{orderBeanController.lazyModel}">
+    <p:column headerText="Item" style="font-weight:bold;font-size:10;width:110px;text-align:left">
+        <h:outputText value="#{car.item}" style="font-weight:bold;font-size:10;"/>
+    </p:column>
+ 
+    <p:column headerText="Qty" style="font-weight:bold;font-size:10;text-align:left">
+        <h:outputText value="#{car.qty}" style="font-weight:bold;font-size:10;" />
+    </p:column>
+ 
+    <p:column headerText="Price" style="font-weight:bold;font-size:10;text-align:left">
+        <h:outputText value="#{car.rate}" style="font-weight:bold;font-size:10;"/>
+    </p:column>
+ 
+    <p:column headerText="Amt" style="font-weight:bold;font-size:10;text-align:left">
+        <h:outputText value="#{car.amt}" style="font-weight:bold;font-size:10;"/>
+    </p:column>
+ 
+   				 <p:columnGroup type="footer">
+            <p:row>
+            
+               
+         		<p:column style="font-weight:bold;font-size:9;text-align:left" footerText="Tax Value(5.00 %)" />
+         		<p:column style="font-weight:bold;font-size:9;text-align:left" footerText="CGST (2.5%)" />  
+         		<p:column style="font-weight:bold;font-size:9;text-align:left" footerText="SGST (2.5%)" />  
+         		<p:column style="font-weight:bold;font-size:9;text-align:left" footerText="Discount" />  
+   </p:row>
+   <p:row>
+            
+               
+         		<p:column style="font-weight:bold;font-size:9;" footerText="#{orderBeanDao.taxval}" />
+         		<p:column style="font-weight:bold;font-size:9;" footerText="#{orderBeanDao.cgst}" />  
+         		<p:column style="font-weight:bold;font-size:9;" footerText="#{orderBeanDao.sgst}" />  
+         		<p:column style="font-weight:bold;font-size:9;" footerText="#{orderBeanDao.discp} %" />  
+   </p:row>
+   </p:columnGroup>
+</p:dataTable>
+   
+  
+      <h:outputText value="Total:    #{orderBeanDao.totalamt}" style="font-weight:bold;font-size:16;float:right" /><br/><br/>
+     <h:outputText value="Thank You ......Visit Again" style="font-weight:bold;font-size:10;display:inline-block;width:100%;text-align:center" /><br/>
+     
+     <h:outputText value="Website: #{orderBeanDao.web}" style="font-weight:bold;font-size:10;display:inline-block;width:100%;text-align:center" /><br/>
+     
+     </div>
+</p:panel>
+<p:outputLabel  value="Payment mode: " />
+         <p:selectOneMenu id="menu" value="#{orderBeanDao.selectedModep}">
+            <f:selectItem itemLabel="Select One Item"/>
+            <f:selectItems value="#{orderBeanDao.modeps}"/>
+            <p:ajax event="itemSelect" update="table:selectedItemText"/>
+        </p:selectOneMenu>
+        <h:outputText id="selectedItemText" value="#{orderBeanDao.selectedModep} is selected!"/>
+        <br/>
+<b:commandButton value="Bill Confirm" ajax="true"  look="success"  action="#{orderBeanDao.billListener}" update="y:growl" >    
+     <p:ajax update="dlg" process="@this"/>
+    </b:commandButton>
+    
+    
+   <p:commandButton value="Print" type="button" icon="pi pi-print" style="display:block;margin-bottom: 20px">
+   
+    <p:printer target="dlg" />
+</p:commandButton>
+
+ 
+</p:dialog>
+    
+   </h:form>
+
+
+   
+</html>
+

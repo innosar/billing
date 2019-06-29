@@ -1,0 +1,155 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+ <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="false"></button>
+                    <h4><i class="icon fa fa-info"></i> Dear Admin! Add/Modify User </h4>
+                    
+                </div>
+
+<h:form style="background-color:#E6E6FA">
+ 
+     
+ 
+ 
+
+    
+ 
+     
+     <p:panel id="x">
+    
+     <h:panelGrid id="sss" columns="3" cellpadding="5">
+  
+        
+       <p:outputLabel  value="Add User : " />
+       <p:inputText size="" maxlength="50" l30abel="auser"
+	id="auser"
+	value="#{addmodify.auser}" required="true" />
+<p:message for="auser" />
+           
+         <p:outputLabel  value="Add Role : " />
+       <p:inputText size="1" maxlength="1" label="arole"
+	id="arole"
+	value="#{addmodify.arole}" required="true" >
+	<f:validateLongRange minimum="1" maximum="1" required="true"/>
+	</p:inputText>
+<p:message for="arole" />         
+              
+                
+ </h:panelGrid>
+  
+  <p:commandButton id="s2" value="Submit" icon="ui-icon-check" actionListener="#{addmodify.action}" update="formUser"/>
+  
+   <p:panelGrid id="note" columns="2" style="margin-top:20px"> 
+<h:outputText value="Role:1"/>
+<h:outputText value="General"/>
+<h:outputText value="Role:2"/>
+<h:outputText value="Admin"/>
+
+
+</p:panelGrid> 
+  </p:panel>
+  
+  
+  </h:form>
+  
+     
+     <h:form id="formUser">
+
+
+	<p:growl id="growl" showDetail="true" />
+	<h:panelGroup id="dataPanel">
+		<p:dataTable value="#{addmodifyController.lazyModel}" id="userTable"
+			var="item" paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="(Entries: {startRecord} - {endRecord} of {totalRecords}, Page: {currentPage}/{totalPages})"
+			rowsPerPageTemplate="20,50,100"
+			emptyMessage="No Result found with given criteria"
+			rowKey="#{item.empNo}" >
+			
+			
+			<p:column style="width:3%">
+			  <f:facet name="header">  
+            <h:outputText value="SLNO." />  
+        </f:facet> 
+                 <h:outputText value="#{rowIndex+1}" />
+            </p:column>
+             
+              
+       
+			<p:column sortBy="#{item.auser}" filterBy="#{item.auser}">
+			<f:facet name="header">  
+            <h:outputText value="User" />  
+        </f:facet> 
+
+             <h:outputText value="#{item.auser}" />
+          </p:column>
+			
+			<p:column sortBy="#{item.arole}" filterBy="#{item.arole}">
+			<f:facet name="header">  
+            <h:outputText value="Role" />  
+        </f:facet> 
+
+             <h:outputText value="#{item.arole}" />
+          </p:column>
+          
+         
+			<p:column exportable="false">
+				<p:commandButton id="selectButton" update=":form2:panel"
+					icon="ui-icon-search" title="View" oncomplete="PF('dlg').show()">
+					<f:setPropertyActionListener
+						target="#{addmodifyController.selectedAddmodify}" value="#{item}" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+	</h:panelGroup>
+	
+</h:form>
+
+<p:confirmDialog id="confirmDialog" showEffect="fade" hideEffect="fade"
+	global="true">
+	<h:form id="deletion">
+		<p:commandButton id="confirm" value="Yes" immediate="true"
+			styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+			actionListener="#{addmodifyController.deleteListener}"
+			update=":formUser:userTable,:form2:panel,:formUser:growl" />
+		<p:commandButton id="decline" value="No" type="button"
+			styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	</h:form>
+</p:confirmDialog>
+
+
+
+<p:dialog id="kp" widgetVar="dlg" resizable="true" dynamic="true" responsive="true" maximizable="true" minimizable="true" closeOnEscape="true" height="200" >
+<h:form id="form2">
+	<p:panelGrid columns="3" id="panel" cellpadding="5"
+		styleClass="ui-widget-content-borderless"
+		columnClasses="mp-column-center">
+		<f:facet name="header" align="left">
+			<h:outputText value="Addmodify details " />
+			<p:commandButton value="Delete" icon="ui-icon-trash"
+				rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">
+				<p:confirm header="Deletion process" icon="ui-icon-alert"
+					message="Can you confirm your deletion?" />
+			</p:commandButton>
+		</f:facet>
+		<ui:include src="/pages/settings/addmodifynameEdit.xhtml">
+			<ui:param name="affectForm>
+Id" value=":form2" />
+			<ui:param name="idValue" value="1" />
+		</ui:include>
+	</p:panelGrid>
+
+
+</h:form>
+</p:dialog>
+  
+   
+    
+   
+</html>
+

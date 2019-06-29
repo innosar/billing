@@ -1,0 +1,85 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
+	
+	
+
+
+<h:form id="y">
+	<p:growl id="growl" showDetail="true" />
+	
+
+
+
+ 
+    
+
+
+ 
+ 
+    
+      <b:container fluid="true" rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">
+      
+      <p:outputLabel  value="Table Name: (Only 10 Characters) " />
+      <b:inputText id="tname" size="10"   value="#{addTable.tname}" required="true"/>       
+           <p:message for="tname" />
+            
+   
+
+<b:commandButton id="s1" look="primary"  value="Submit" icon="ui-icon-check"  action="#{addTable.action}"   update="y:growl,table:parentPanel">
+  
+ </b:commandButton>
+ 
+</b:container>
+
+</h:form>
+    <h:form id="table">
+     <p:growl id="growl" showDetail="true" />
+     <p:dataTable value="#{tableBeanController.lazyModel}" id="parentPanel"
+			var="item" paginator="true" rows="20" lazy="true" rowIndexVar="rowIndex"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="(Entries: {startRecord} - {endRecord} of {totalRecords}, Page: {currentPage}/{totalPages})"
+			rowsPerPageTemplate="20,50,100,200,500,1000,10000,100000"
+			emptyMessage="No Result found with given criteria"
+			rowKey="#{item.sno}" >
+			
+			<p:column >
+			<f:facet name="header">  
+            <h:outputText value="SlNo" />  
+        </f:facet> 
+				<h:outputText value="#{item.sno}" />
+			</p:column>
+			
+			<p:column sortBy="#{item.tname}" filterBy="#{item.tname}">
+			<f:facet name="header">  
+            <h:outputText value="Table Name" />  
+        </f:facet> 
+				<h:outputText value="#{item.tname}" />
+			</p:column>
+			
+			<p:column sortBy="#{item.sta}" filterBy="#{item.sta}">
+			<f:facet name="header">  
+            <h:outputText value="Status" />  
+        </f:facet> 
+				<h:outputText value="#{item.sta}" />
+			</p:column>
+			<p:column rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">
+			 <p:commandButton value="Delete" ajax="true"  look="danger"  action="#{tableBeanController.deleteListener(item.sno)}" update="table:parentPanel,table:growl" >
+						
+						 </p:commandButton>
+				</p:column>		 
+						 
+			</p:dataTable>
+    
+
+     
+    
+ 
+    
+    </h:form>
+    
+</html>
+

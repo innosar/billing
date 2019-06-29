@@ -1,0 +1,226 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template.xhtml">
+	<ui:define name="heading">
+		
+	</ui:define>
+	<ui:define name="body">
+		<h:form id="form3">
+			<p:panel header="Add Address"
+				styleClass="ui-widget-content-borderless"
+				columnClasses="mp-column-center">
+				<p:messages id="messages" showDetail="true" autoUpdate="true" />
+
+				<h:panelGrid columns="2" id="matchGrid">
+					<h:outputLabel for="address1" value="Add Address line1: *" />
+					<p:inputText id="address1"
+						value="#{addressController.address1}"
+						label="Address1" required="true" />
+
+<h:outputLabel for="address2" value="Add Address line2: *" />
+					<p:inputText id="address2"
+						value="#{addressController.address2}"
+						label="Address2" required="true" />
+
+
+<h:outputLabel for="address3" value="Add Address line3: *" />
+					<p:inputText id="address3"
+						value="#{addressController.address3}"
+						label="Address3" required="true" />
+
+
+<h:outputLabel for="address4" value="Add Address line4: " />
+					<p:inputText id="address4"
+						value="#{addressController.address4}"
+						label="Address4"  />
+
+<h:outputLabel for="address5" value="Add Address line5: " />
+					<p:inputText id="address5"
+						value="#{addressController.address5}"
+						label="Address5"  />
+
+
+<h:outputLabel for="gst" value="Add GST: " />
+					<p:inputText id="gst"
+						value="#{addressController.gst}"
+						label="gst" required="true" />
+						
+						
+<h:outputLabel for="web" value="Add Website: " />
+					<p:inputText id="web"
+						value="#{addressController.web}"
+						label="web"  />
+						
+						
+<h:outputLabel for="email" value="Add Email: " />
+					<p:inputText id="email"
+						value="#{addressController.email}"
+						label="email"  />
+						
+						
+<h:outputLabel for="mob" value="Add mobile Number: " />
+					<p:inputText id="mob"
+						value="#{addressController.mob}"
+						label="mob"  />
+						
+						
+<h:outputLabel for="fb" value="Add Facebook: " />
+					<p:inputText id="fb"
+						value="#{addressController.fb}"
+						label="fb"  />
+						
+						
+<h:outputLabel for="insta" value="Add Instagram: " />
+					<p:inputText id="insta"
+						value="#{addressController.insta}"
+						label="insta"  />
+
+<h:outputLabel for="twit" value="Add Twitter: " />
+					<p:inputText id="twit"
+						value="#{addressController.twit}"
+						label="twit"  />
+				
+				</h:panelGrid>
+
+				<p:commandButton id="saveButton" value="Save"
+					action="#{addressController.submit}" update="table:parentPanel,table:growl"/>
+			</p:panel>
+			
+			
+		</h:form>
+		
+		<h:form id="table">
+     <p:growl id="growl" showDetail="true" />
+     <p:dataTable value="#{addressBeanController.lazyModel}" id="parentPanel"
+			var="item" paginator="false" rows="10" lazy="true" rowIndexVar="rowIndex"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="(Entries: {startRecord} - {endRecord} of {totalRecords}, Page: {currentPage}/{totalPages})"
+			rowsPerPageTemplate="20,50,100"
+			emptyMessage="No Result found with given criteria"
+			rowKey="#{item.sno}" >
+			
+			
+			<p:column>
+			<f:facet name="header">  
+            <h:outputText value="Address" />  
+        </f:facet> 
+        		<h:outputText value="Address Line1 : "  style="font-weight:bold;text-align:center" /><br/>
+				
+				<h:outputText value="Address Line2 : "  style="font-weight:bold;text-align:center" /><br/>
+				
+				<h:outputText value="Address Line3 : "  style="font-weight:bold;text-align:center" /><br/>
+				
+				<h:outputText value="Address Line4 : "  style="font-weight:bold;text-align:center" /><br/>
+				
+				<h:outputText value="Address Line5 : "  style="font-weight:bold;text-align:center" /><br/>
+				
+				<h:outputText value="GST : "  style="font-weight:bold;text-align:center" /><br/>
+				
+				<h:outputText value="Website : "  style="font-weight:bold;text-align:center" /><br/>
+				
+				<h:outputText value="Email : "  style="font-weight:bold;text-align:center" /><br/>
+				
+				<h:outputText value="Mob No : "  style="font-weight:bold;text-align:center" /><br/>
+				
+				<h:outputText value="Facebook : "  style="font-weight:bold;text-align:center" /><br/>
+				
+				<h:outputText value="Instagram : "  style="font-weight:bold;text-align:center" /><br/>
+				
+				<h:outputText value="Twitter: "  style="font-weight:bold;text-align:center" /><br/>
+				
+			</p:column>
+			
+			<p:column>
+			
+				<h:outputText value="#{item.address1}" /><br/>
+			
+				<h:outputText value="#{item.address2}" /><br/>
+			
+				<h:outputText value="#{item.address3}" /><br/>
+			
+				<h:outputText value="#{item.address4}" /><br/>
+			
+				<h:outputText value="#{item.address5}" /><br/>
+			
+				<h:outputText value="#{item.gst}" /><br/>
+			
+				<h:outputText value="#{item.web}" /><br/>
+			
+				<h:outputText value="#{item.email}" /><br/>
+			
+				<h:outputText value="#{item.mob}" /><br/>
+			
+				<h:outputText value="#{item.fb}" /><br/>
+			
+				<h:outputText value="#{item.insta}" /><br/>
+				
+				<h:outputText value="#{item.twit}" /><br/>
+			</p:column>
+			
+				
+			<p:column exportable="false">
+				<p:commandButton id="selectButton" update=":form2:panel" 
+					icon="ui-icon-search" title="View" oncomplete="PF('dlg1').show()">
+					<f:setPropertyActionListener
+						target="#{addressBeanController.selectedAddressBean}" value="#{item}" />
+				</p:commandButton>
+			</p:column>  
+						 
+			</p:dataTable>
+    
+
+     
+    
+ 
+    
+    </h:form>
+    
+    <p:confirmDialog id="confirmDialog" showEffect="fade" hideEffect="fade"
+	global="true">
+	<h:form id="deletion">
+		<p:commandButton id="confirm" value="Yes" immediate="true" 
+			styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+			actionListener="#{addressBeanController.deleteListener}"
+			update=":table:parentPanel,:form2:panel,:table:growl"/>
+		<p:commandButton id="decline" value="No" type="button"
+			styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	</h:form>
+</p:confirmDialog>
+
+
+<p:dialog id="k" widgetVar="dlg1" resizable="true" dynamic="true" responsive="true" maximizable="true" minimizable="true" closeOnEscape="true" height="600" >
+<h:form id="form2">
+	<p:panel id="panel">
+		<f:facet name="header" align="left">
+			<h:outputText value="Student details " />
+			<p:commandButton value="Save" icon="ui-icon-check" 
+				actionListener="#{addressBeanController.createOrUpdateListener}"
+				update=":table:parentPanel,:form2:panel,:table:growl"
+				rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}" />
+			<p:commandButton value="Delete" icon="ui-icon-trash" 
+				rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">
+				<p:confirm header="Deletion process" icon="ui-icon-alert"
+					message="Can you confirm your deletion?" />
+			</p:commandButton>
+		</f:facet>
+		<ui:include src="/pages/settings/addressEdit.xhtml">
+			<ui:param name="affectForm>
+Id" value=":form2" />
+			<ui:param name="idValue" value="1" />
+		</ui:include>
+	</p:panel>
+
+
+</h:form>
+</p:dialog>
+    
+    
+    
+    
+    
+	</ui:define>
+</ui:composition>
+</html>

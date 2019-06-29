@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Billing Management System</title>
+        <meta name="author" content="Rakesh M D" />
+        <meta name="description" content="Restaurant Billing Management System" />
+        <meta name="KEYWORDS" content="jsf, bootstrap, framework, java, enterprise, server, faces, jquery, usability, next-gen, web, html5, easy, modern, well-designed, website, state-of-the-art" />
+        <meta name="robots" content="index, follow" />
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="revisit-after" content="7 days" />
+        <meta name="DISTRIBUTION" content="GLOBAL" />
+        <meta http-equiv="PRAGMA" content="NO-CACHE" />
+        <meta name="copyright" content="TheCoder4.eu ( Riccardo Massera ), Stephan Rauh et al." />
+        <h:outputStylesheet library="sh" name="css/shCore.css"/>
+        <h:outputStylesheet library="sh" name="css/shCoreEclipse.css"/>
+        <!-- These CSS don't do anything. The just demonstrate the position attribute.>
+        <h:outputStylesheet name="last.css" position="last"/>
+        <h:outputStylesheet name="first.css" position="first"/>
+        <h:outputStylesheet name="middle.css" position="middle"/-->
+        <!--h:outputStylesheet library="customthemes" name="#{theme.customTheme}/bootstrap.min.css"  rendered="#{theme.customTheme ne ''}"/>
+        <h:outputStylesheet library="customthemes" name="#{theme.customTheme}/#{theme.customTheme}.css" rendered="#{theme.customTheme ne ''}"/-->
+        <style>.tooltip-inner {
+            max-width: 350px;
+            /* If max-width does not work, try using width instead */
+            width: 350px; 
+        }
+        </style>
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+       
+    </h:head>
+    <h:body style="padding-top: 85px;padding-bottom: 85px;" addLabels="false" addMessages="false">
+        
+        <h:outputScript library="sh" name="js/shCore.js"         target="head"/>
+        <h:outputScript library="sh" name="js/shBrushXml.js"     target="head"/>
+        <h:outputScript library="sh" name="js/shBrushJava.js"    target="head"/>
+        <h:outputScript library="sh" name="js/shBrushGroovy.js"  target="head"/>
+        <h:outputScript library="sh" name="js/shBrushJScript.js" target="head"/>
+        <script>SyntaxHighlighter.defaults['gutter'] = false;</script>   
+        <script>
+        if ($.blockUI) {
+          $.blockUI.defaults.overlayCSS.opacity=0;
+          $.blockUI.defaults.message='<h1><img src="../javax.faces.resource/images/waitcursor.gif.jsf?ln=bsf" /></h1>';
+        }
+        </script>         
+        <ui:insert name="nbtop">
+            <ui:include src="navbartop.xhtml"/>
+        </ui:insert>
+        
+        <b:container>
+            <ui:insert name="content"/>
+            
+            <b:container>
+            <h:form styleClass="form-signin" prependId="false" >
+           <b:panelGrid colSpans="6,6" size="lg">
+				
+  <b:column>
+  <b:row>
+  <p:messages id="messages" showDetail="true" autoUpdate="true" />
+    
+                <h2 class="form-signin-heading">Please sign in</h2>
+    
+    <b:column medium-screen="8">
+                <b:inputText id="j_username" placeholder="Login ID" value="#{loginController.userInfo.username}">
+                    <f:facet name="prepend">
+                        <b:icon name="user" />
+                    </f:facet>
+                </b:inputText>
+            </b:column>
+             <b:column medium-screen="6">
+    <b:message for="j_username" />
+    </b:column>
+    
+    </b:row>
+    <b:row>
+            
+                <b:column medium-screen="8">
+                <b:inputText id="j_password" placeholder="Password" type="password" value="#{loginController.userInfo.password}">
+                    <f:facet name="prepend">
+                        <b:iconAwesome name="key" />
+                    </f:facet>
+                </b:inputText>
+                </b:column>
+                 <b:column medium-screen="6">
+   <b:message for="j_password" />
+   </b:column>
+   </b:row>
+                <b:column span="4" offset="2" >
+
+                
+                <b:commandButton look="primary btn-block" value="Sign In" icon="log-in" size="mg" action="#{loginController.login}" />
+                
+                </b:column>
+                
+                </b:column>
+                </b:panelGrid>
+            </h:form>
+        </b:container>
+        
+        </b:container>
+        
+        
+        <ui:insert name="nbtop">
+            <ui:include src="navbarbottom.xhtml"/>
+        </ui:insert>
+        
+    </h:body>
+</html>

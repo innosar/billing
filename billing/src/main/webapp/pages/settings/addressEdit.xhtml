@@ -1,0 +1,108 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+<!-- those two empty p : outputLabel are totally unbelievable but there seems to be needed 
+     when the artifact is used from a ui:include otherwise there is gap of one column and the
+	 label, field, validation are not aligned...&nbsp;
+-->
+
+
+    
+<p:panelGrid columns="3" id="panel1" cellpadding="5">
+<p:outputLabel>Address1 *</p:outputLabel>
+<p:inputText size="100" maxlength="100" label="addr1"
+	id="addr1"
+	value="#{addressBeanController.selectedAddressBean.address1}" required="true" />
+<p:message for="addr1" />
+
+
+<p:outputLabel>Address2 *</p:outputLabel>
+<p:inputText size="50" maxlength="50" label="addr2"
+	id="addr2"
+	value="#{addressBeanController.selectedAddressBean.address2}" required="true" />
+<p:message for="addr2" />
+
+<p:outputLabel>Address3 *</p:outputLabel>
+<p:inputText size="50" maxlength="50" label="addr3"
+	id="addr3"
+	value="#{addressBeanController.selectedAddressBean.address3}" required="true" />
+<p:message for="addr3" />
+
+
+<p:outputLabel>Address4 </p:outputLabel>
+<p:inputText size="50" maxlength="50" label="addr4"
+	id="addr4"
+	value="#{addressBeanController.selectedAddressBean.address4}"  />
+<p:message for="addr4" />
+
+
+<p:outputLabel>Address5</p:outputLabel>
+<p:inputText size="50" maxlength="50" label="addr5"
+	id="addr5"
+	value="#{addressBeanController.selectedAddressBean.address5}" />
+<p:message for="addr5" />
+
+
+
+<p:outputLabel>GST *</p:outputLabel>
+<p:inputText size="30" maxlength="30" label="gst"
+	id="gst"
+	value="#{addressBeanController.selectedAddressBean.gst}" required="true" />
+<p:message for="gst" />
+
+
+<p:outputLabel>Website</p:outputLabel>
+<p:inputText size="30" maxlength="30" label="web"
+	id="web"
+	value="#{addressBeanController.selectedAddressBean.web}"/>
+<p:message for="web" />
+
+
+<p:outputLabel>Email</p:outputLabel>
+<p:inputText size="30" maxlength="30" label="email"
+	id="email"
+	value="#{addressBeanController.selectedAddressBean.email}"/>
+<p:message for="email" />
+
+
+<p:outputLabel>Mobile</p:outputLabel>
+<p:inputText size="15" maxlength="15" label="mob"
+	id="mob"
+	value="#{addressBeanController.selectedAddressBean.mob}"/>
+<p:message for="mob" />
+
+<p:outputLabel>Facebook</p:outputLabel>
+<p:inputText size="30" maxlength="30" label="fb"
+	id="fb"
+	value="#{addressBeanController.selectedAddressBean.fb}"/>
+<p:message for="fb" />
+
+
+
+
+<p:outputLabel>Instagram</p:outputLabel>
+<p:inputText size="30" maxlength="30" label="insta"
+	id="insta"
+	value="#{addressBeanController.selectedAddressBean.insta}"/>
+<p:message for="insta" />
+
+
+
+
+<p:outputLabel>Twitter</p:outputLabel>
+<p:inputText size="30" maxlength="30" label="twit"
+	id="twit"
+	value="#{addressBeanController.selectedAddressBean.twit}"/>
+<p:message for="twit" />
+
+     </p:panelGrid>
+<!-- those two empty p : outputLabel are totally inbelievable but there seems to be needed 
+     when the artifact is used from a ui:include otherwise there is gap of one column and the
+	 label, field, validation are not aligned...&nbsp;
+-->
+
+</html>
+
