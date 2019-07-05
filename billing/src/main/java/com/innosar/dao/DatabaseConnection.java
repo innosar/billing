@@ -16,9 +16,7 @@ public enum DatabaseConnection {
 
 		try {
 
-			Class.forName("com.mysql.jdbc.Driver");
-
-			return DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Rakesh123");
+			return DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
 
 		} catch (Exception e) {
 
